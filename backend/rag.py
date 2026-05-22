@@ -52,10 +52,19 @@ def answer_question(session_id: str, question: str) -> dict:
     """Load ChromaDB for session → retrieve → answer with memory."""
     chroma_path = f"./chroma_sessions/{session_id}"
 
+    # Check if session exists
+    if not os.path.exists(chroma_path):
+        raise ValueError(f"Session {session_id} not found. Please upload a PDF first.")
+
     vectorstore = Chroma(
         persist_directory=chroma_path,
         embedding_function=embeddings
     )
+
+    # Check if vectorstore has documents
+    if vectorstore._collection.count() == 0:
+        raise ValueError("Vector store is empty. PDF may not have been processed correctly.")
+
     retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
 
     prompt = ChatPromptTemplate.from_messages([

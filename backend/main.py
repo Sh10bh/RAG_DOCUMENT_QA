@@ -11,10 +11,12 @@ app = FastAPI(title="RAG Document QA API")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:3000",      # React dev server
-        "http://localhost:5173",      # Vite dev server
-        "https://your-app.vercel.app" # Production (update later)
-    ],
+    "http://localhost:3000",      # React dev server
+    "http://localhost:5173",      # Vite dev server
+    "http://localhost:80",        # Docker nginx
+    "http://localhost",           # Docker nginx (no port)
+    "https://your-app.vercel.app" # Production (update later)
+],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -16,6 +16,7 @@ app.add_middleware(
     "http://localhost:80",        # Docker nginx
     "http://localhost",           # Docker nginx (no port)
     "https://your-app.vercel.app" # Production (update later)
+    "https://sh10bh-rag-document-qa-backend.hf.space",
 ],
     allow_credentials=True,
     allow_methods=["*"],

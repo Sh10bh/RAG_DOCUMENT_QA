@@ -7,6 +7,7 @@ export default function ChatWindow({ sessionId, filename }) {
   const [question, setQuestion] = useState("")
   const [loading, setLoading] = useState(false)
   const bottomRef = useRef(null)
+  const textareaRef = useRef(null)
 
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: "smooth" }) }, [messages, loading])
 
@@ -91,8 +92,11 @@ export default function ChatWindow({ sessionId, filename }) {
       </div>
 
       <div style={{ padding: "16px", borderTop: "1px solid #e2e8f0", background: "white" }}>
-        <div style={{ display: "flex", gap: "10px", alignItems: "flex-end", background: "#f8fafc", borderRadius: "12px", padding: "10px 14px", border: "1px solid #e2e8f0" }}>
+        <div
+          onClick={() => textareaRef.current?.focus()}
+          style={{ display: "flex", gap: "10px", alignItems: "flex-end", background: "#f8fafc", borderRadius: "12px", padding: "10px 14px", border: "1px solid #e2e8f0", cursor: "text" }}>
           <textarea
+            ref={textareaRef}
             value={question}
             onChange={e => setQuestion(e.target.value)}
             onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendQuestion() }}}

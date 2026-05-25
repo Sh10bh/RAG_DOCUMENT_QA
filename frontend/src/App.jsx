@@ -1,38 +1,40 @@
 import { useState } from "react"
 import UploadPanel from "./components/UploadPanel"
 import ChatWindow from "./components/ChatWindow"
+import "./App.css"
 
 function App() {
   const [sessionId, setSessionId] = useState(null)
   const [filename, setFilename] = useState(null)
+  const [pageCount, setPageCount] = useState(null)
 
   return (
-    <div style={{
-      maxWidth: "800px",
-      margin: "0 auto",
-      padding: "20px",
-      fontFamily: "sans-serif"
-    }}>
-      <h1 style={{ textAlign: "center", color: "#2563eb" }}>
-        📄 AskMyPDF
-      </h1>
-      <p style={{ textAlign: "center", color: "#666" }}>
-        Upload a PDF and ask questions about it
-      </p>
-
-      <UploadPanel
-        onUploadSuccess={(sid, fname) => {
-          setSessionId(sid)
-          setFilename(fname)
-        }}
-      />
-
-      {sessionId && (
-        <ChatWindow
-          sessionId={sessionId}
-          filename={filename}
-        />
-      )}
+    <div className="app-container">
+      <header className="app-header">
+        <div className="app-logo">
+          <span className="logo-icon">📄</span>
+          <span className="logo-text">AskMyPDF</span>
+        </div>
+      </header>
+      <main className="app-main">
+        <div className="left-panel">
+          <UploadPanel
+            onUploadSuccess={(sid, fname, pages) => {
+              setSessionId(sid)
+              setFilename(fname)
+              setPageCount(pages)
+            }}
+            filename={filename}
+            pageCount={pageCount}
+          />
+        </div>
+        <div className="right-panel">
+          <ChatWindow
+            sessionId={sessionId}
+            filename={filename}
+          />
+        </div>
+      </main>
     </div>
   )
 }
